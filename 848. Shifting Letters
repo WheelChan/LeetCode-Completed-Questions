@@ -1,0 +1,32 @@
+#done in python
+
+class Solution(object):
+    def shiftingLetters(self, s, shifts):
+        """
+        :type s: str
+        :type shifts: List[int]
+        :rtype: str
+        """
+        length = len(shifts)
+        if length == 0:
+            return s
+        if length == 2:
+            shifts[0] += shifts[1]
+        elif length != 1:
+            for i in range(length - 2, -1, -1):
+                shifts[i] += shifts[i+1]
+                
+        for i in range(length):
+            shifts[i] = shifts[i] % 26
+        
+        print(shifts)
+        s_list = list(s)
+        s_length = len(s_list)
+        
+        for i in range(s_length):
+            temp = ord(s_list[i]) + shifts[i]
+            if temp > 122:
+                temp = temp - 123 + 97
+            s_list[i] = chr(temp)
+        
+        return "".join(s_list)
