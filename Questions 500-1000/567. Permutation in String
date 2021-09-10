@@ -1,0 +1,38 @@
+#code in python
+
+class Solution(object):
+    def checkInclusion(self, s1, s2):
+        """
+        :type s1: str
+        :type s2: str
+        :rtype: bool
+        """
+        
+        s1l = list(s1)
+        s2l = list(s2)
+        
+        length1 = len(s1l)
+        length2 = len(s2l)
+        
+        if length1 > length2:
+            return False
+        
+        s1_letters = [0]*26
+        
+        for i in s1l:
+            s1_letters[ord(i) - 97] += 1
+        
+        for i in range(length2 - length1 + 1):
+            temp = [0]*26
+            for j in range(length1):
+                temp[ord(s2l[i+j]) - 97] += 1
+            
+            if self.check(s1_letters, temp):
+                return True  
+        return False
+    
+    def check(self, s, curr):
+        for i in range(26):
+            if s[i] != curr[i]:
+                return False        
+        return True
