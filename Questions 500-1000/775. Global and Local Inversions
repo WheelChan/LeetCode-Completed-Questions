@@ -1,5 +1,6 @@
 //Coded with C++
 
+//in order to have equal global and local inversions, an inversion must be a local and global inversion and so if its not, return False
 class Solution {
 public:
     bool isIdealPermutation(vector<int>& A) {
