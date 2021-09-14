@@ -1,0 +1,17 @@
+#done in python
+
+class Solution(object):
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        length = len(nums)
+        max_memo = [1] * length
+        min_memo = [1] * length
+        
+        for i in range(length):
+            max_memo[i] = max(max_memo[i-1] * nums[i], min_memo[i-1] * nums[i], nums[i])
+            min_memo[i] = min(max_memo[i-1] * nums[i], min_memo[i-1] * nums[i], nums[i])
+        
+        return max(max_memo)
