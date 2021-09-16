@@ -1,0 +1,37 @@
+#code written in python
+
+class Solution(object):
+    def letterCasePermutation(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        s_list = list(s)
+        length = len(s_list)
+        res = []
+        
+        self.find(s_list, res, [], length, 0)
+        return res
+        
+    def find(self, s, res, temp, length, curr):
+        if curr == length:
+            res.append("".join(temp[:]))
+            return
+            
+        if ord(s[curr]) >= 48 and ord(s[curr]) <= 57:
+            temp.append(s[curr])
+            self.find(s, res, temp, length, curr + 1)
+            temp.pop()
+        else:
+            temp.append(s[curr])
+            self.find(s, res, temp, length, curr + 1)
+            temp.pop()
+            if ord(s[curr]) >= 97:
+                temp.append(chr(ord(s[curr]) - 32))
+                self.find(s, res, temp, length, curr + 1)
+                temp.pop()
+            elif ord(s[curr]) >= 65:
+                temp.append(chr(ord(s[curr]) + 32))
+                self.find(s, res, temp, length, curr + 1)
+                temp.pop()
+            
