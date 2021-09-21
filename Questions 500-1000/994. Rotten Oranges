@@ -1,0 +1,48 @@
+#done with python
+
+class Solution(object):
+    def orangesRotting(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        num_fresh = 0
+        minutes = 0
+        rotten = []
+        
+        height = len(grid)
+        width = len(grid[0])
+        
+        for i in range(height):
+            for k in range(width):
+                if grid[i][k] == 1:
+                    num_fresh += 1
+                elif grid[i][k] == 2:
+                    rotten.append([i, k])
+        
+        directions = [[0,1], [0,-1], [1,0], [-1, 0]]
+        if num_fresh == 0:
+            return 0
+        #print(rotten)
+        
+        while rotten:
+            minutes += 1
+            length = len(rotten)
+            for j in range(length):
+                k = rotten[j]
+                for i in directions:
+                    if k[0] + i[0] < height and k[0] + i[0] >= 0:
+                        if k[1] + i[1] < width and k[1] + i[1] >= 0:
+                            if grid[k[0] + i[0]][k[1] + i[1]] == 1:
+                                grid[k[0] + i[0]][k[1] + i[1]] = 2
+                                rotten.append([k[0] + i[0], k[1] + i[1]])
+                                num_fresh -= 1
+                                
+            if num_fresh == 0:
+                return minutes
+            rotten = rotten[length:]
+            #print(rotten)
+            
+        if num_fresh > 0:
+            return -1
+        return minutes
