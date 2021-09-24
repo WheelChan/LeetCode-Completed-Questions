@@ -1,0 +1,46 @@
+#done with python
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def rotateRight(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        if k == 0:
+            return head
+        if not head:
+            return head
+        size = 1
+        curr = head
+        while curr.next != None:
+            size += 1
+            curr = curr.next
+
+        if k > 0:
+            shifts = size - (k % size)
+        else:
+            shifts = (k % size) * -1 + size
+
+        if shifts == 0 or shifts == size:
+            return head
+
+        curr = head
+        for i in range(shifts):
+            curr = curr.next
+
+        res = curr #this the new head
+        while curr.next != None:
+            curr = curr.next
+
+        curr.next = head
+        while head.next != res:
+            head = head.next
+        head.next = None
+
+        return res
