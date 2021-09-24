@@ -14,7 +14,7 @@ class Solution(object):
         """
         if k == 0:
             return head
-        if not head:
+        if not head or head.next == None:
             return head
         size = 1
         curr = head
