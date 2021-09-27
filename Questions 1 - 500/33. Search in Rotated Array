@@ -1,0 +1,72 @@
+#written in python
+
+class Solution(object):
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        length = len(nums)
+        if length == 0:
+            return -1
+        if length < 4:
+            for i in range(length):
+                if nums[i] == target:
+                    return i
+            return -1
+        
+        start = 0
+        end = length - 1
+        curr = (end - start)/2
+        min_ind = -1
+        
+        if nums[0] < nums[end]:
+            min_ind = 0
+        
+        while min_ind < 0:
+            if nums[curr] > nums[curr+1]:
+                min_ind = curr+1
+                break
+            if nums[curr-1] > nums[curr]:
+                min_ind = curr
+                break
+            
+            if nums[start] > nums[curr]:
+                end = curr
+                curr = (end - start) / 2 + start
+            else:
+                start = curr
+                curr = (end - start) / 2 + start
+                
+        
+        start = 0
+        end = length - 1
+        if min_ind == 0:
+            if nums[min_ind] == target:
+                return min_ind
+            min_ind = 1
+        if min_ind == end:
+            if nums[min_ind] == target:
+                return min_ind
+            min_ind -= 1
+        curr = min_ind
+            
+        while True:
+            if nums[curr] == target:
+                return curr
+            if curr + 1 == length or curr - 1 < 0:
+                return -1
+            if nums[curr - 1] == target:
+                return curr - 1
+            if nums[curr + 1] == target:
+                return curr + 1
+            
+            if nums[curr+1] > target and nums[curr-1] < target:
+                return -1
+            
+            if nums[start] <= target and nums[curr - 1] >= target:
+                end = curr - 1
+            else:
+                start = curr + 1
+            curr = (end - start) / 2 + start
