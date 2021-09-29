@@ -1,0 +1,50 @@
+#written in python
+
+
+from threading import Lock
+class ZeroEvenOdd(object):
+    def __init__(self, n):
+        self.n = n
+        self.count = 1
+        self.lock_zero, self.lock_even, self.lock_odd = (Lock(), Lock(), Lock())
+        self.lock_even.acquire()
+        self.lock_odd.acquire()
+        
+	# printNumber(x) outputs "x", where x is an integer.
+    def zero(self, printNumber):
+        """
+        :type printNumber: method
+        :rtype: void
+        """
+        for _ in range(self.n):
+            self.lock_zero.acquire()
+            printNumber(0)
+            if self.count % 2 == 0:
+                self.lock_even.release()
+            else:
+                self.lock_odd.release()
+        
+        
+    def even(self, printNumber):
+        """
+        :type printNumber: method
+        :rtype: void
+        """
+        for _ in range(self.n//2):
+            self.lock_even.acquire()
+            printNumber(self.count)
+            self.count += 1
+            self.lock_zero.release()
+        
+        
+    def odd(self, printNumber):
+        """
+        :type printNumber: method
+        :rtype: void
+        """
+        for _ in range((self.n+1)//2):
+            self.lock_odd.acquire()
+            printNumber(self.count)
+            self.count += 1
+            self.lock_zero.release()
+        
